@@ -1,12 +1,10 @@
-import Header from "@/components/Header/Header";
+import NavBar from "@/components/Header/NavBar";
 import ThemeProvider from "@/components/Providers/ThemeProvider";
+import { DotPattern } from "@/components/shadcnui/dot-pattern";
 import { geistMono, geistSans } from "@/lib/fonts";
+import { cn } from "@/lib/utils";
 import { ReactNode } from "react";
 import "./globals.css";
-import NavBar from "@/components/Header/NavBar";
-import { LightRays } from "@/components/shadcnui/light-rays";
-import { DotPattern } from "@/components/shadcnui/dot-pattern";
-import { cn } from "@/lib/utils";
 
 type RootLayoutProps = {
   children: ReactNode;
@@ -18,7 +16,7 @@ const RootLayout = ({ children }: Readonly<RootLayoutProps>) => {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       suppressHydrationWarning>
-      <body className="scrollbar-none">
+      <body className="relative min-h-screen scrollbar-none">
         <DotPattern
           width={20}
           height={20}
@@ -26,15 +24,18 @@ const RootLayout = ({ children }: Readonly<RootLayoutProps>) => {
           cy={1}
           cr={1}
           className={cn(
-            "mask-[linear-gradient(to_bottom_right,white,transparent,transparent)]",
+            "fixed inset-0 text-neutral-400/40 dark:text-neutral-500/25",
+            "mask-[linear-gradient(to_bottom,white,transparent_85%)]",
           )}
         />
         <ThemeProvider
-          attribute={"class"}
-          defaultTheme="dark"
-          enableSystem={false}>
+          attribute="class"
+          defaultTheme="system"
+          enableSystem>
           <NavBar />
-          <main className="mx-auto max-w-7xl px-6 py-3">{children}</main>
+          <main className="relative mx-auto max-w-7xl px-6 pt-19 pb-0">
+            {children}
+          </main>
         </ThemeProvider>
       </body>
     </html>
